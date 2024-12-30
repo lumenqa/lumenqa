@@ -1,0 +1,31 @@
+# Login Flow Test
+# Demonstrates form interaction and assertions
+
+test "User can log in successfully":
+    navigate "https://app.example.com/login"
+
+    # Fill in credentials
+    input #email => "test@example.com"
+    input #password => secret("TEST_PASSWORD")
+
+    # Submit form
+    click "Login"
+
+    # Verify successful login
+    expect url contains "/dashboard"
+    expect text "Welcome back!"
+    expect element ".user-menu" visible
+    expect element ".logout-btn" visible
+
+
+test "Login fails with invalid credentials":
+    navigate "https://app.example.com/login"
+
+    input #email => "invalid@example.com"
+    input #password => "wrongpassword"
+    click "Login"
+
+    # Should show error message
+    expect text "Invalid credentials"
+    expect element ".error-message" visible
+    expect url not_contains "/dashboard"

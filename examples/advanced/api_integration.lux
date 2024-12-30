@@ -1,0 +1,68 @@
+# API + UI Integration Testing
+# Demonstrates LumenQA's ability to combine API and UI testing
+
+test "E2E: Create user via API and verify in UI":
+    # Setup: Create user via API
+    api POST "/api/users" {
+        email: "newuser@example.com",
+        name: "Test User",
+        role: "admin"
+    } => response
+
+    expect response.status = 201
+    expect response.body.id exists
+
+    # Store user ID for later
+    set user_id = response.body.id
+
+    # Test: Verify user appears in UI
+    navigate "https://app.example.com/admin/users"
+    login_as "admin@example.com"
+
+    # Search for newly created user
+    input #search => "newuser@example.com"
+    click "Search"
+
+    expect element contains "newuser@example.com"
+    expect element contains "Test User"
+    expect element ".user-role" text = "admin"
+
+    # Cleanup: Delete user via API
+    api DELETE f"/api/users/{user_id}"
+    expect response.status = 204
+
+
+test "Mock API responses for UI testing":
+    # Mock network requests for isolated UI testing
+    mock api "/api/products" returns {
+        products: [
+            {id: 1, name: "Product A", price: 29.99},
+            {id: 2, name: "Product B", price: 49.99}
+        ]
+    }
+
+    navigate "https://shop.example.com"
+
+    # UI should display mocked data
+    expect element ".product-card" count = 2
+    expect text "Product A"
+    expect text "$29.99"
+
+
+async test "GraphQL query integration":
+    # LumenQA supports GraphQL natively
+    gql query {
+        user(id: "123") {
+            name
+            email
+            posts {
+                title
+            }
+        }
+    } => result
+
+    expect result.data.user.name = "John Doe"
+
+    # Use query results in UI testing
+    navigate f"https://app.com/users/{result.data.user.id}"
+    expect text result.data.user.name

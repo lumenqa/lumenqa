@@ -1,0 +1,84 @@
+framework: lumenqa
+version: 0.9.4
+
+# Project configuration
+project:
+  name: example-tests
+  base_url: https://example.com
+
+# Execution settings
+parallelization: 4  # Run 4 tests in parallel
+retries: 2          # Retry failed tests twice
+timeout: 30s        # Default timeout for operations
+
+# Browser settings
+browsers:
+  - chrome
+  - firefox
+  - safari
+
+headless: true
+
+# LumenVM optimization
+lumenvm:
+  gpu_acceleration: true
+  intent_trees: enabled
+  dom_caching: aggressive
+  network_parallelization: true
+
+# Selectors
+selectors:
+  self_healing: true
+  strategies:
+    - css
+    - text
+    - aria
+    - data-testid
+    - visual_ai
+
+# Waiting behavior
+waits:
+  implicit: 5s
+  page_load: 30s
+  ajax: 10s
+
+# Screenshots & Videos
+media:
+  screenshots:
+    on: failure          # always, failure, never
+    format: png
+    quality: 90
+  videos:
+    on: failure
+    fps: 30
+    quality: high
+
+# Reporting
+reporting:
+  type: lumencloud     # lumencloud, json, html, junit
+  upload: true
+  include_screenshots: true
+  include_videos: true
+  include_network_logs: true
+  include_console_logs: true
+
+# Integrations
+integrations:
+  slack:
+    webhook: ${SLACK_WEBHOOK}
+    notify_on: failure
+  jira:
+    auto_create_issues: false
+
+# CI/CD
+ci:
+  detect_flakes: true
+  parallel_workers: auto
+  fail_fast: false
+  cache_dependencies: true
+
+# Environment variables
+env:
+  TEST_PASSWORD: ${TEST_PASSWORD}
+  API_KEY: ${API_KEY}
+  BASE_URL: https://staging.example.com

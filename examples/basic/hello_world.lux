@@ -1,0 +1,7 @@
+# Basic Hello World Test
+# This is the simplest possible LumenQA test
+
+test "Hello World":
+    navigate "https://example.com"
+    expect title "Example Domain"
+    expect element "h1" visible

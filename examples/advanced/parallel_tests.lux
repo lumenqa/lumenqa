@@ -1,0 +1,56 @@
+# Advanced Parallel Execution
+# Demonstrates PyLux's async capabilities and parallel testing
+
+async test "Homepage loads all sections in parallel":
+    await navigate "https://myapp.com"
+
+    # Check all sections simultaneously - runs in parallel
+    await all:
+        - expect element ".header" visible
+        - expect element ".hero" visible
+        - expect element ".features" visible
+        - expect element ".testimonials" visible
+        - expect element ".footer" visible
+        - screenshot "full-page"
+
+    # Verify no console errors
+    expect console.errors count = 0
+    expect console.warnings count < 3
+
+
+async test "Multi-user concurrent actions":
+    # Simulate multiple users interacting simultaneously
+    await parallel:
+        - user1:
+            navigate "https://app.com"
+            login_as "user1@test.com"
+            click ".create-post"
+            input #title => "Post from User 1"
+
+        - user2:
+            navigate "https://app.com"
+            login_as "user2@test.com"
+            click ".create-post"
+            input #title => "Post from User 2"
+
+        - user3:
+            navigate "https://app.com"
+            login_as "user3@test.com"
+            refresh_feed
+
+    # Verify all posts are visible
+    expect element contains "Post from User 1"
+    expect element contains "Post from User 2"
+
+
+test "Performance regression check":
+    navigate "https://myapp.com"
+
+    # LumenQA tracks performance automatically
+    expect page_load_time < 2s
+    expect time_to_interactive < 3s
+    expect first_contentful_paint < 1.5s
+
+    # Click interactions should be fast
+    click ".menu-button"
+    expect action_duration < 100ms
