@@ -12,6 +12,7 @@ from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from .version import __version__, __lumenvm_version__, __pylux_version__
 from .runner import TestRunner
+from .live_runner import run_live_tests
 
 console = Console()
 
@@ -195,14 +196,25 @@ def doctor():
 def search(query):
     """Search documentation"""
     console.print(f"\n[cyan]Searching docs for:[/cyan] {query}\n")
-    console.print("[dim]📖 https://docs.lumenqa.dev/search?q={query}[/dim]\n")
+    console.print(f"[dim]📖 https://lumenqa.com/docs/search?q={query}[/dim]\n")
 
 
 @main.command()
 def cloud():
     """Open LumenCloud dashboard"""
     console.print("\n[cyan]Opening LumenCloud dashboard...[/cyan]")
-    console.print("[dim]🌐 https://cloud.lumenqa.dev[/dim]\n")
+    console.print("[dim]🌐 https://lumenqa.com/cloud[/dim]\n")
+
+
+@main.command()
+@click.option('--suite', '-s', default='default', help='Test suite to run')
+@click.option('--parallel', '-p', type=int, help='Number of parallel workers')
+@click.option('--browser', '-b', default='chrome', help='Browser to use')
+@click.option('--tests-file', '-t', type=click.Path(exists=True), help='Custom test data file (Python module)')
+def test(suite, parallel, browser, tests_file):
+    """Run test suite with live output"""
+    success = run_live_tests(tests_file=tests_file)
+    sys.exit(0 if success else 1)
 
 
 if __name__ == "__main__":
