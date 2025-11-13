@@ -40,8 +40,8 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://lumenqa.dev"
-Documentation = "https://docs.lumenqa.dev"
+Homepage = "https://lumenqa.com"
+Documentation = "https://lumenqa.com/docs"
 Repository = "https://github.com/lumenqa/lumenqa"
 "Bug Reports" = "https://github.com/lumenqa/lumenqa/issues"
 

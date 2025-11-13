@@ -21,7 +21,7 @@
 
 *Because milliseconds matter.*
 
-[Installation](#installation) • [Quick Start](#quick-start) • [Documentation](https://docs.lumenqa.dev) • [Examples](#examples) • [Benchmarks](#benchmarks)
+🌐 **[Visit LumenQA.com](https://lumenqa.com/)** | [Installation](#installation) • [Quick Start](#quick-start) • [Documentation](https://lumenqa.com/docs) • [Examples](#examples) • [Benchmarks](#benchmarks)
 
 </div>
 
@@ -454,7 +454,8 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Community
 
-- **Documentation**: [docs.lumenqa.dev](https://docs.lumenqa.dev)
+- **Website**: [lumenqa.com](https://lumenqa.com/)
+- **Documentation**: [lumenqa.com/docs](https://lumenqa.com/docs)
 - **Discord**: [discord.gg/lumenqa](https://discord.gg/lumenqa)
 - **Twitter**: [@lumenqa](https://twitter.com/lumenqa)
 - **Stack Overflow**: Tag `lumenqa`

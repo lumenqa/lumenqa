@@ -119,4 +119,4 @@ mock api "/api/users" returns {...}
 
 ---
 
-For detailed documentation, visit [docs.lumenqa.dev](https://docs.lumenqa.dev)
+For detailed documentation, visit [lumenqa.com/docs](https://lumenqa.com/docs)

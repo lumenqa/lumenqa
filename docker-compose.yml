@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  lumenqa:
+    build: .
+    container_name: lumenqa-runner
+    volumes:
+      - ./tests:/app/tests
+      - ./results:/app/results
+    environment:
+      - LUMEN_ENV=production
+      - APP_URL=https://staging.example.com
+    tty: true
+    stdin_open: true
